@@ -32,8 +32,8 @@ const authenticate: RequestHandler = (req, res, next) => {
     AppErrorCode.InvalidAccessToken
   );
 //   console.log(req.userId);
-    req.userId = payload.userId as mongoose.Types.ObjectId;
-    req.sessionId = payload.sessionId as mongoose.Types.ObjectId;
+    (req as any).userId = payload.userId as mongoose.Types.ObjectId;
+(req as any).sessionId = payload.sessionId as mongoose.Types.ObjectId;
     next();
 };
 

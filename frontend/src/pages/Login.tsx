@@ -73,7 +73,7 @@ const Login = () => {
                 </Link>
               </div>
               <Button
-                className="w-full"
+                className="w-full text-white"
                 disabled={!email || password.length < 6 || isPending}
                 onClick={() => signIn({ email, password })}
               >

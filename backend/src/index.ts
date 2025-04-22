@@ -11,6 +11,9 @@ import authRoutes from "./routes/auth.route";
 import authenticate from "./middleware/authenticate";
 import userRoutes from "./routes/user.route";
 import sessionRoutes from "./routes/session.route";
+import helmet from "helmet";
+import bodyParser from "body-parser";
+import morgan from "morgan";
 
 const app = express();
 
@@ -19,6 +22,11 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan("common"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -40,5 +48,5 @@ app.use(errorHandler);
 
 app.listen(PORT, async () => {
     console.log(`Listening on port ${PORT} in ${NODE_ENV}`);
-    await connectDB();
+    // await connectDB();
 });

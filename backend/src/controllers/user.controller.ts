@@ -6,7 +6,7 @@ import catchErrors from "../utils/catchErrors"
 
 export const getUserHandler = catchErrors (
     async (req, res) => {
-        const user = await UserModel.findById(req.userId)
+        const user = await UserModel.findById(req.params.userId)
         appAssert(user, NOT_FOUND, "User not found")
         res.status(OK).json(user.omitPassword())
     }

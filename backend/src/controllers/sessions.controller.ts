@@ -7,7 +7,7 @@ import catchErrors from "../utils/catchErrors";
 export const getSessionHandler = catchErrors(async (req, res) => {
     const sessions = await SessionModel.find(
         { 
-            userId: req.userId,
+            userId: (req as any).userId,
             expiresAt: { $gt: new Date() }
         },
         {
@@ -23,7 +23,7 @@ export const getSessionHandler = catchErrors(async (req, res) => {
     res.status(OK).json(
         sessions.map((session) => ({
             ...session.toObject(),
-            ...(session.id === req.sessionId && { 
+            ...(session.id === (req as any).sessionId && {
                 isCurrent: true 
             })
         }))
@@ -34,7 +34,7 @@ export const deleteSessionHandler = catchErrors(async (req, res) => {
     const sessionId = z.string().parse(req.params.id)
     const deleted = await SessionModel.findOneAndDelete({
         _id: sessionId,
-        userId: req.userId
+        userId: (req as any).userId
     })
     appAssert(deleted, NOT_FOUND, "Session not found")
 
